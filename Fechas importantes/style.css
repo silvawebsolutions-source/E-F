@@ -1,0 +1,104 @@
+:root {
+    --primary: #ff4b5c;
+    --bg-gradient: linear-gradient(135deg, #fff5f6 0%, #ffe3e7 100%);
+}
+
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Quicksand', sans-serif; 
+}
+
+body {
+    background: var(--bg-gradient);
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    min-height: 100vh; 
+    text-align: center; 
+    padding: 20px;
+}
+
+#card {
+    background: white; 
+    padding: 30px 22px; 
+    border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(255, 75, 92, 0.12);
+    width: 100%; 
+    max-width: 390px; 
+    position: relative;
+    border: 1px solid rgba(255, 182, 193, 0.4);
+}
+
+h1 { 
+    font-family: 'Dancing Script', cursive; 
+    color: var(--primary); 
+    margin-bottom: 8px; 
+    font-size: 2.1rem; 
+}
+
+p { color: #666; margin-bottom: 20px; font-size: 0.95rem; }
+
+/* Botón flotante para regresar al menú */
+#btn-back-menu {
+    position: fixed; top: 20px; left: 20px; z-index: 1000;
+    background: white; color: var(--primary); border: 2px solid var(--primary);
+    padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem;
+    text-decoration: none; box-shadow: 0 4px 12px rgba(255, 75, 92, 0.1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* --- MAQUETACIÓN DE LA LÍNEA DE TIEMPO --- */
+.timeline { 
+    text-align: left; 
+    margin-top: 5px; 
+    max-height: 330px; 
+    overflow-y: auto; 
+    padding-right: 8px; 
+}
+
+/* Barra de scroll bonita y discreta para el celular */
+.timeline::-webkit-scrollbar { width: 4px; }
+.timeline::-webkit-scrollbar-track { background: #fff0f2; border-radius: 10px; }
+.timeline::-webkit-scrollbar-thumb { background: #ffccd2; border-radius: 10px; }
+
+.timeline-item { 
+    position: relative; 
+    padding-left: 28px; 
+    border-left: 2px solid #ffccd2; 
+    margin-bottom: 22px; 
+}
+.timeline-item:last-child { border-left: 2px solid transparent; }
+
+/* Icono indicador del timeline */
+.timeline-item::before { 
+    content: '❤️'; 
+    position: absolute; 
+    left: -9px; 
+    top: 0; 
+    font-size: 0.75rem; 
+    background: white; 
+    padding: 1px 0;
+}
+
+.timeline-date { 
+    font-weight: 700; 
+    color: var(--primary); 
+    font-size: 0.95rem; 
+    display: block; 
+    margin-bottom: 4px;
+}
+
+.timeline-desc { 
+    font-size: 0.85rem; 
+    color: #555; 
+    line-height: 1.45; 
+    margin-bottom: 0;
+}
+
+@media (max-width: 400px) {
+    #card { padding: 25px 18px; }
+    h1 { font-size: 1.8rem; }
+    .timeline { max-height: 290px; }
+}

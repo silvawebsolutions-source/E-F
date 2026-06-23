@@ -9,18 +9,17 @@
 </head>
 <body>
     
-    <!-- ELEMENTO DE AUDIO -->
+    <a href="../index.html" id="btn-back-menu">🏠 Menú</a>
+    
     <audio id="background-music" loop>
-        <source src="/music/pablo-alboran-solamente-tu-videoclip-oficial_XMQHc7QC.mp3" type="audio/mpeg">
+        <source src="../music/pablo-alboran-solamente-tu-videoclip-oficial_XMQHc7QC.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- CONTROL DE MÚSICA FLOTANTE -->
     <div id="music-control" onclick="toggleMusic()" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: white; padding: 10px; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
         🎵
     </div>
 
     <div id="card">
-        <!-- MODAL DE ERROR -->
         <div id="error-modal">
             <div class="modal-icon">🙊</div>
             <h2 style="color: var(--primary); margin-bottom: 10px;">¡Ups!</h2>
@@ -28,7 +27,6 @@
             <button class="btn-retry" onclick="closeModal()">Intentar de nuevo</button>
         </div>
 
-        <!-- MODAL DE RESPUESTA PREGUNTA 4 (ESTILO IGUAL AL DE ERROR) -->
         <div id="frase-modal">
             <div class="modal-icon">🤭</div>
             <h2 style="color: var(--primary); margin-bottom: 10px;">¡Jeje!</h2>
@@ -36,14 +34,12 @@
             <button class="btn-retry" onclick="closeFraseModal()">Continuar ❤️</button>
         </div>
 
-        <!-- PANTALLA DE INICIO -->
         <div id="step0" class="step active">
             <h1>Hola, mi amor ❤️</h1>
             <p style="font-size: 1.2rem; margin-bottom: 25px;">¿Estás lista para empezar?</p>
             <button class="btn-next-final" onclick="startQuiz()" style="margin-top: 0; width: 100%; border-radius: 12px;">Comenzar</button>
         </div>
 
-        <!-- PASOS DEL 1 AL 5 -->
         <div id="step1" class="step">
             <h1>Nivel 1: El inicio</h1>
             <p>¿En qué mes comenzamos a hablar?</p>
@@ -98,12 +94,11 @@
             <button class="btn-next-final" onclick="startSurprise()">Siguiente</button>
         </div>
 
-        <!-- PANTALLA DE SORPRESA FINAL -->
         <div id="stepFinal" class="step">
             <div id="dynamic-text" class="typing" style="min-height: 80px; display: flex; align-items: center; justify-content: center; font-family: 'Dancing Script'; font-size: 1.8rem; color: var(--primary); padding: 0 10px;"></div>
             
             <div id="lugar-container" style="display:none;">
-                <img src="img/carro2.jpeg" id="fotoLugar" class="img-lugar" style="display:block; width:100%; border-radius:15px; border:3px solid var(--primary);">
+                <img src="../img/carro2.jpeg" id="fotoLugar" class="img-lugar" style="display:block; width:100%; border-radius:15px; border:3px solid var(--primary);">
                 
                 <div id="timer-container" style="margin-top: 10px; padding: 8px;">
                     <p style="font-size: 0.8rem; margin-bottom: 5px; color: #666;">Llevamos compartiendo:</p>
@@ -120,24 +115,46 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        #btn-back-menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: white;
+            color: var(--primary, #ff4b5c);
+            border: 2px solid var(--primary, #ff4b5c);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(255, 75, 92, 0.1);
+            transition: transform 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        #btn-back-menu:active { transform: scale(0.95); }
+    </style>
+
     <script>
         const misFotos = [
-            'img/img_1.jpeg', 
-            'img/img_2.jpeg',
-            'img/img3.jpeg',
-            'img/img4.jpeg',
-            'img/im5.jpeg',
-            'img/img6.jpeg',
-            'img/img7.jpeg',
-            'img/img8.jpeg',
-            'img/img9.jpeg',
-            'img/img10.jpeg',
-            'img/jardin.jpeg',
-            'img/quesera.jpeg',
-            'img/camar.jpeg',
-            'img/desay.jpeg',
-            'img/lagunaM.jpeg',
-            'img/lucca PM.jpeg'
+            '../img/img_1.jpeg', 
+            '../img/img_2.jpeg',
+            '../img/img3.jpeg',
+            '../img/img4.jpeg',
+            '../img/im5.jpeg',
+            '../img/img6.jpeg',
+            '../img/img7.jpeg',
+            '../img/img8.jpeg',
+            '../img/img9.jpeg',
+            '../img/img10.jpeg',
+            '../img/jardin.jpeg',
+            '../img/quesera.jpeg',
+            '../img/camar.jpeg',
+            '../img/desay.jpeg',
+            '../img/lagunaM.jpeg',
+            '../img/lucca PM.jpeg'
         ];
 
         const fechaInicio = new Date(2026, 3, 21, 0, 0, 0); 
@@ -165,7 +182,6 @@
         function next(current, type) {
             if(type === 'correct') {
                 if(current === 4) {
-                    // Muestra el modal con diseño en vez de la alerta molesta
                     savedCurrent = current;
                     document.getElementById('frase-modal').style.display = 'flex';
                 } else {

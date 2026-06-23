@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frasco de las Razones 💌</title>
+    <link rel="stylesheet" href="../La pedida/style.css"> <!-- Reutiliza tus estilos base -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos específicos para esta sección */
+        #btn-back-menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: white;
+            color: #ff4b5c;
+            border: 2px solid #ff4b5c;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(255, 75, 92, 0.1);
+            transition: transform 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        #btn-back-menu:active { transform: scale(0.95); }
+
+        .jar-container {
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .jar-container:hover {
+            transform: scale(1.05);
+        }
+        .jar-icon {
+            font-size: 6rem;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Estilo de la nota que sale del frasco */
+        .reason-note {
+            background: #fff5f6;
+            border-left: 5px solid #ff4b5c;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            color: #444;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+        .reason-note.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .btn-draw {
+            background: #ff4b5c;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-family: 'Quicksand', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 75, 92, 0.2);
+            margin-top: 15px;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        .btn-draw:active { transform: scale(0.98); }
+    </style>
+</head>
+<body>
+
+    <!-- BOTÓN PARA REGRESAR AL MENÚ PRINCIPAL -->
+    <a href="../index.html" id="btn-back-menu">🏠 Menú</a>
+
+    <div id="card">
+        <h1 style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: #ff4b5c; margin-bottom: 5px;">
+            Nuestro Frasco 🧪
+        </h1>
+        <p style="font-size: 0.95rem; color: #666; margin-bottom: 20px;">
+            Un frasquito lleno de pequeñas razones por las que me encantas. ¡Saca una nota! 🥰
+        </p>
+        
+        <div class="jar-container" onclick="drawReason()">
+            <div class="jar-icon" id="jar">🫙</div>
+        </div>
+
+        <button class="btn-draw" onclick="drawReason()">Sacar una razón ❤️</button>
+
+        <!-- Aquí se mostrará la nota -->
+        <div id="reason-display" class="reason-note">
+            Dale clic al frasco o al botón para descubrir una razón...
+        </div>
+    </div>
+
+    <!-- Script de Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        // Array de razones (¡Aquí puedes agregar todas las que quieras!)
+        const razones = [
+            "Amo la forma tan bonita en la que se iluminan tus ojos cuando sonríes. 👀✨",
+            "Me encanta cómo me haces sentir seguro y en paz cada vez que me abrazas. 🤗❤️",
+            "Amo compartir contigo cada tarde, plática y momento, especialmente si hay un buen café de por medio. ☕🥰",
+            "Porque tienes un corazón enorme y una forma de ser que me enamora más todos los días. 💖",
+            "Me fascina tu sentido del humor y cómo logras sacarme una sonrisa incluso en los días más pesados. 🤭",
+            "Amo que seas mi persona favorita, mi compañera de aventuras y mi mayor apoyo. 💍",
+            "Me encanta cómo eres tan tú: auténtica, detallista y completamente perfecta para mí. 😍",
+            "Porque la vida es muchísimo más bonita y brillante desde que estás en ella. 🌟",
+            "Amo la complicidad que tenemos y cómo con solo mirarnos ya sabemos qué estamos pensando. 🥂"
+        ];
+
+        let ultimaRazon = -1;
+
+        function drawReason() {
+            const display = document.getElementById('reason-display');
+            const jar = document.getElementById('jar');
+            
+            // Animación de agitar el frasco
+            jar.style.animation = 'none';
+            setTimeout(() => {
+                jar.style.animation = 'float 0.3s ease-in-out 2';
+            }, 10);
+
+            // Elegir una razón al azar sin que se repita la inmediata anterior
+            let indice;
+            do {
+                indice = Math.floor(Math.random() * razones.length);
+            } while (indice === ultimaRazon && razones.length > 1);
+            
+            ultimaRazon = indice;
+            const razonSeleccionada = razones[indice];
+
+            // Efecto visual al cambiar el texto
+            display.classList.remove('show');
+            
+            setTimeout(() => {
+                display.innerText = razonSeleccionada;
+                display.classList.add('show');
+                
+                // Confetti sutil de corazones
+                confetti({
+                    particleCount: 25,
+                    spread: 40,
+                    origin: { y: 0.7 },
+                    shapes: ['text'],
+                    shapeOptions: { text: { value: ['❤️', '💖', '✨'] } }
+                });
+            }, 300);
+        }
+    </script>
+</body>
+</html>

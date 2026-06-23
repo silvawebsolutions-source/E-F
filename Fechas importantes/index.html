@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestras Fechas 📅</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- BOTÓN PARA REGRESAR AL MENÚ PRINCIPAL -->
+    <a href="../index.html" id="btn-back-menu">🏠 Menú</a>
+
+    <div id="card">
+        <h1>Nuestras Fechas 📅</h1>
+        <p>Momentos hermosos grabados en el corazón:</p>
+        
+        <div class="timeline">
+            <!-- 21 DE MARZO -->
+            <div class="timeline-item">
+                <span class="timeline-date">21 de Marzo 2026</span>
+                <p class="timeline-desc">El día en el que iniciamos a hablar y todo comenzó a cambiar de color. ✨</p>
+            </div>
+            
+            <!-- 29 DE MARZO -->
+            <div class="timeline-item">
+                <span class="timeline-date">29 de Marzo 2026</span>
+                <p class="timeline-desc">Nuestra hermosa e inolvidable 1er cita disfrutando en Suchitlán. ☕</p>
+            </div>
+            
+            <!-- 1 DE ABRIL -->
+            <div class="timeline-item">
+                <span class="timeline-date">1 de Abril 2026</span>
+                <p class="timeline-desc">El momento exacto de nuestro primer abrazo. Sentir tu calidez por primera vez. 🤗❤️</p>
+            </div>
+
+            <!-- 6 DE ABRIL -->
+            <div class="timeline-item">
+                <span class="timeline-date">6 de Abril 2026</span>
+                <p class="timeline-desc">Nuestro primer beso en la magica Laguna de "El Naranjal". 💖</p>
+            </div>
+            
+            <!-- 3 DE JUNIO -->
+            <div class="timeline-item">
+                <span class="timeline-date">3 de Junio 2026 💍</span>
+                <p class="timeline-desc">El gran día en que empezamos a ser novios oficialmente. ¡El inicio del viaje más feliz a tu lado! 😍</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ESTILO PARA EL BOTÓN DE REGRESO -->
+    <style>
+        #btn-back-menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: white;
+            color: var(--primary, #ff4b5c);
+            border: 2px solid var(--primary, #ff4b5c);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(255, 75, 92, 0.1);
+            transition: transform 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        #btn-back-menu:active { transform: scale(0.95); }
+    </style>
+
+</body>
+</html>

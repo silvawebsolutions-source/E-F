@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestros Recuerdos 📸</title>
+    <link rel="stylesheet" href="../La pedida/style.css">
+    <link rel="stylesheet" href="../Recuerdos/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+
+
+    <div id="card" style="padding: 15px;">
+        <h1 style="font-family: 'Dancing Script', cursive; font-size: 2.3rem; color: #ff4b5c; margin-bottom: 5px;">
+            Nuestros Momentos 📸
+        </h1>
+        <p style="font-size: 0.85rem; color: #666; margin-bottom: 5px;">
+            Hojéalo o añade una foto nueva directamente a nuestro espacio. 🥰
+        </p>
+
+        <div class="swiper-container" id="polaroid-stack">
+            <p id="msg-loading-photos" style="color: #ff4b5c; font-weight: bold;">Cargando nuestros recuerdos favoritos... ⏳</p>
+        </div>
+
+        <div class="nav-buttons">
+             <button class="btn-nav" onclick="changePhoto(-1)">◀</button>
+            <a href="../index.html" id="btn-back-menu">🏠 Menú</a>
+            <button class="btn-nav" onclick="changePhoto(1)">▶</button>
+        </div>
+
+        <div class="upload-section">
+            <label for="upload-input" class="btn-upload-label">📸 Añadir Foto al Álbum</label>
+            <input type="file" id="upload-input" accept="image/*" onchange="uploadPhoto(this)">
+            <div id="loading-status" class="loading-text">Guardando foto en nuestro Drive... ⏳</div>
+        </div>
+    </div>
+
+    <script>
+        // ⚠️ PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT QUE TERMINA EN /exec
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby1dn3MayFBJHPwehW29-1HB8G6bVx8K0hWnutyVN5ggNprR_JopB_JyhthstAO060z/exec";
+
+        let album = [];
+        let currentIndex = 0;
+        const stack = document.getElementById('polaroid-stack');
+
+        // FUNCIÓN PARA TRAER LAS FOTOS DE DRIVE AUTOMÁTICAMENTE
+        // REEMPLAZA ESTA FUNCIÓN COMPLETA EN TU HTML
+function loadPhotosFromDrive() {
+    fetch(WEB_APP_URL)
+    .then(res => res.json())
+    .then(response => {
+        if(response.status === "success" && response.data.length > 0) {
+            // Transformamos los IDs en URLs de visualización directa ultra rápidas
+            album = response.data.map(item => {
+                let cleanCaption = item.caption ? item.caption.trim() : "";
+                
+                // Expresión regular para detectar si el título es solo una fecha de 8 números (ej: 20260531)
+                const esNumeroFecha = /^\d{8}$/.test(cleanCaption);
+                const esArchivoRaro = cleanCaption.includes('.') || cleanCaption.startsWith('IMG-') || cleanCaption.startsWith('Recuerdo_');
+
+                // Si no hay texto, o es una fecha, o un nombre raro de archivo, le clavamos el corazón
+                if (!cleanCaption || esNumeroFecha || esArchivoRaro) {
+                    cleanCaption = "❤️";
+                }
+                
+                return {
+                    // Usamos el renderizador directo de Google Drive con un bypass térmico de caché
+                    src: `https://lh3.googleusercontent.com/d/${item.id}=s0`,
+                    caption: cleanCaption
+                };
+            });
+        } else {
+            useBackupPhotos();
+        }
+        renderStack();
+    })
+    .catch(err => {
+        console.error("Error cargando fotos de Drive:", err);
+        useBackupPhotos();
+        renderStack();
+    });
+}
+        function renderStack() {
+            stack.innerHTML = '';
+            if(album.length === 0) {
+                stack.innerHTML = '<p style="color:#666;">Aún no hay fotos. ¡Sube la primera! 🥰</p>';
+                return;
+            }
+            album.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'polaroid';
+                card.innerHTML = `
+                    <img src="${item.src}" alt="Recuerdo">
+                    <div class="polaroid-caption">${item.caption}</div>
+                `;
+                stack.appendChild(card);
+            });
+            updateCards();
+        }
+
+        function updateCards() {
+            const cards = document.querySelectorAll('.polaroid');
+            if(cards.length === 0) return;
+            cards.forEach((card, index) => {
+                card.classList.remove('active', 'next-card');
+                if (index === currentIndex) {
+                    card.classList.add('active');
+                } else if (index === (currentIndex + 1) % album.length) {
+                    card.classList.add('next-card');
+                }
+            });
+        }
+
+        function changePhoto(direction) {
+            if(album.length === 0) return;
+            currentIndex = (currentIndex + direction + album.length) % album.length;
+            updateCards();
+        }
+
+        // SUBIDA DE FOTOS REFORMADA SIN TRABAS DE RESPUESTA
+        function uploadPhoto(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    const titulo = prompt("Escribe un mensaje corto para tu Polaroid: 👇", "Un momento mágico ✨");
+    if (titulo === null) return; 
+
+    const statusText = document.getElementById('loading-status');
+    statusText.style.display = 'block';
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = new Image();
+        img.src = e.target.result;
+        
+        img.onload = function() {
+            // --- TRUCO DE COMPRESIÓN ---
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Definimos un tamaño máximo óptimo para pantallas (ej. Full HD / 1200px)
+            const MAX_WIDTH = 1200;
+            const MAX_HEIGHT = 1200;
+            let width = img.width;
+            let height = img.height;
+            
+            if (width > height) {
+                if (width > MAX_WIDTH) {
+                    height *= MAX_WIDTH / width;
+                    width = MAX_WIDTH;
+                }
+            } else {
+                if (height > MAX_HEIGHT) {
+                    width *= MAX_HEIGHT / height;
+                    height = MAX_HEIGHT;
+                }
+            }
+            
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Dibujamos la imagen redimensionada en el canvas
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            // Convertimos a Base64 reduciendo la calidad al 70% (compresión imperceptible al ojo)
+            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+            
+            const payload = {
+                base64: compressedBase64,
+                mimeType: 'image/jpeg',
+                caption: titulo || "Un nuevo recuerdo ❤️"
+            };
+
+            // Enviamos el archivo ya ultra ligero a Google Drive
+            fetch(WEB_APP_URL, {
+                method: "POST",
+                mode: "no-cors", 
+                headers: { "Content-Type": "text/plain" },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                setTimeout(() => {
+                    statusText.style.display = 'none';
+                    alert("¡Listo amor! Tu foto se guardó de forma optimizada. Recargando... 🥰");
+                    currentIndex = 0;
+                    loadPhotosFromDrive(); 
+                }, 2500);
+            })
+            .catch(err => {
+                statusText.style.display = 'none';
+                console.error(err);
+                alert("Detalle en la conexión.");
+            });
+        };
+    };
+    reader.readAsDataURL(file);
+}
+
+        // Ejecutar al cargar la página
+        loadPhotosFromDrive();
+    </script>
+</body>
+</html>

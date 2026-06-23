@@ -1,0 +1,122 @@
+#btn-back-menu {
+            /* Quitamos el fixed y absolute para que se acople en medio de las flechas */
+            position: relative; 
+            z-index: 1000;
+            background: white;
+            color: #ff4b5c;
+            border: 2px solid #ff4b5c;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(255, 75, 92, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 45px; /* Misma altura que los botones nav para que se alineen perfectos */
+            box-sizing: border-box;
+        }
+        .swiper-container {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            height: 380px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .polaroid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            padding: 15px 15px 60px 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-radius: 4px;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            opacity: 0;
+            transform: scale(0.9) translateY(10px);
+            pointer-events: none;
+            box-sizing: border-box;
+        }
+        .polaroid img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+        .polaroid-caption {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: #444;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+        .polaroid.active { opacity: 1; transform: scale(1) translateY(0) rotate(-2deg); z-index: 3; pointer-events: auto; }
+        .polaroid.next-card { opacity: 0.4; transform: scale(0.95) translateY(15px) rotate(3deg); z-index: 2; }
+        
+        /* Modificamos flex para alinear los 3 elementos al centro con buena separación */
+        .nav-buttons { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            gap: 15px; /* Espaciado fijo y limpio entre flecha-menú-flecha */
+            width: 100%; 
+            max-width: 320px; 
+            margin: 0 auto 15px auto; 
+        }
+        .btn-nav { background: white; color: #ff4b5c; border: 2px solid #ff4b5c; width: 45px; height: 45px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        
+        .upload-section { text-align: center; margin-top: 10px; }
+        .btn-upload-label { background: #ff4b5c; color: white; padding: 10px 20px; border-radius: 25px; font-weight: bold; font-size: 0.9rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(255, 75, 92, 0.2); }
+        #upload-input { display: none; }
+        .loading-text { display: none; color: #ff4b5c; font-weight: bold; font-size: 0.9rem; margin-top: 8px; }
+
+/* ==========================================
+   MÓDULO RESPONSIVO OPTIMIZADO PARA LA FILA DE BOTONES
+   ========================================== */
+#card {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 360px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 400px) {
+    .swiper-container {
+        max-width: 280px;
+        height: 335px;
+        margin: 10px auto;
+    }
+    .polaroid {
+        padding: 12px 12px 50px 12px;
+    }
+    .polaroid-caption {
+        font-size: 1.4rem;
+        bottom: 12px;
+    }
+    /* En celulares encogemos un poquito los controles para asegurar que entren perfectos */
+    .nav-buttons {
+        gap: 10px;
+    }
+    .btn-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    #btn-back-menu {
+        height: 40px;
+        padding: 6px 14px;
+        font-size: 0.8rem;
+    }
+}
