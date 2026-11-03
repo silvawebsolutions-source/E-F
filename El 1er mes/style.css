@@ -1,0 +1,158 @@
+/* Configuración Base de la Pantalla */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #ffffee;
+}
+
+#anniversary-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 238, 240, 0.96); 
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+/* Letrero de Bienvenida */
+#anniversary-message-box {
+    text-align: center;
+    transition: opacity 0.5s ease;
+}
+
+.dancing-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    color: #ff4b5c;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Botón Dorado Mágico */
+#btn-open-letter {
+    background: linear-gradient(135deg, #ffd700, #ffa500);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    font-size: 1.15rem;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+    animation: pulse 2s infinite, fadeIn 1s ease-in-out;
+}
+
+/* EL PERGAMINO GENERAL */
+#romantic-scroll {
+    position: relative;
+    width: 95%;
+    max-width: 440px; 
+    height: 85vh;     
+    max-height: 550px; 
+    background: url('/img/pergamino.png') no-repeat center center;
+    background-size: 100% 100%; 
+    box-sizing: border-box;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.scroll-hidden { transform: scale(0) rotate(-15deg); opacity: 0; pointer-events: none; }
+.scroll-visible { transform: scale(1) rotate(0deg); opacity: 1; pointer-events: auto; }
+
+/* LA ZONA SEGURA (Garantiza los márgenes perfectos) */
+.scroll-safe-zone {
+    position: absolute;
+    top: 18%;     
+    bottom: 18%;  
+    left: 14%;    
+    right: 14%;   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* Contenedor del texto con scroll oculto */
+.scroll-body { 
+    width: 100%;
+    max-height: 100%;
+    overflow-y: auto; 
+    text-align: center;
+    box-sizing: border-box;
+    padding: 0 5px;
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+}
+
+/* Ocultar barra de scroll en Chrome, Safari y Opera */
+.scroll-body::-webkit-scrollbar {
+    width: 0px !important;
+    height: 0px !important;
+    display: none !important;
+}
+
+.scroll-title { 
+    font-family: 'Dancing Script', cursive; 
+    font-size: 2.2rem; 
+    color: #4a2f13; 
+    margin-top: 0px; 
+    margin-bottom: 5px;
+}
+
+.scroll-text { 
+    font-family: 'Quicksand', sans-serif; 
+    font-size: 0.88rem; 
+    color: #2b1a08; 
+    line-height: 1.45; 
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Botón de cierre externo */
+.btn-close-scroll {
+    position: absolute; 
+    top: -15px; 
+    right: -15px;
+    background: white; 
+    border: 2px solid #4a2f13;
+    font-size: 1.1rem; 
+    color: #4a2f13; 
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 100;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.btn-close-scroll:hover {
+    background: #ff4b5c;
+    color: white;
+    border-color: #ff4b5c;
+}
+
+/* Corazones Flotantes */
+.heart-particle {
+    position: absolute;
+    color: #ff4b5c;
+    pointer-events: none;
+    animation: floatUp 4s linear forwards;
+}
+
+/* Animaciones */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+@keyframes floatUp {
+    0% { transform: translateY(105vh) translateX(0) scale(0.5); opacity: 1; }
+    100% { transform: translateY(-10vh) translateX(60px) scale(1.3); opacity: 0; }
+}

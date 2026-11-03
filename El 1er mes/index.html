@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz 1er Mes! ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="anniversary-overlay" style="display: none;">
+        
+        <div id="anniversary-message-box">
+            <h1 class="dancing-title">¡Feliz primer mes, mi amor! ❤️</h1>
+            <button id="btn-open-letter" style="display: none;" onclick="openAnniversaryLetter()">Dale clic aquí ✨</button>
+        </div>
+
+        <div id="romantic-scroll" class="scroll-hidden">
+            <button class="btn-close-scroll" onclick="closeAnniversaryLetter()">✕</button>
+            
+            <div class="scroll-safe-zone">
+                <div class="scroll-body">
+                    <h2 class="scroll-title">Nuestra Historia...</h2>
+                    <p class="scroll-text">
+                        Mi amor, hoy cumplimos nuestro primer mes juntos y quería prepararte algo tan especial como tú. 
+                        Gracias por cada risa, por cada abrazo y por hacer de este tiempo el más bonito de todos. 
+                        Eres mi persona favorita y este es apenas el inicio de nuestro viaje juntos. 
+                        <br><br>
+                        Te amo con todo mi corazón. ❤️
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <audio id="anniversary-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
